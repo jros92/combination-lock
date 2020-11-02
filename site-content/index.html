@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML CSS JS</title>
+    <script>
+      var MIN_NUMBER = 0;
+      var MAX_NUMBER = 9;
+      var SOLUTION = 777;
+      
+      function checkCombination()
+      {
+        // read current values
+        currentNumber
+        
+        
+        // check with solution
+        if ((currentNumberOne * 100 + currentNumberTwo * 10 + currentNumberThree) == SOLUTION) {
+          document.getElementById('welcome').innerText += " Geöffnet!";
+        }
+      }
+      
+      function increase_number_one()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-one').innerHTML, 10);
+        
+        // determine new value
+        newNumber = currentNumber + 1;
+        if (newNumber > MAX_NUMBER) {
+          newNumber = MIN_NUMBER;
+        }
+        
+        // set new value
+        document.getElementById('wheel-one').innerHTML = newNumber.toString();
+      }
+    </script>
+	<style>
+		/* CSS styles */
+		html, body {
+			height: 100%;
+		}
+
+		html {
+			display: table;
+			margin: auto;
+		}
+
+		body {
+			display: table-cell;
+			vertical-align: middle;
+			font-size: 36
+		}
+		h1 {
+		  font-family: Impact, sans-serif;
+		  color: #CE5937;
+		}
+	</style>
+  </head>
+  <body>
+    <h1 id="welcome">Zahlenschloss</h1>
+    <div class="content" id="container">
+      <div id="top-row">
+        <div id="button-up-1" class="button button-up" onclick='increase_number_one()'>+</div>
+        <div id="button-up-2" class="button button-up" onclick='increase_number_two()'>+</div>
+        <div id="button-up-3" class="button button-up" onclick='increase_number_three()'>+</div>
+      </div>
+      <div id="wheel-row">
+        <div id="wheel-one">1</div>
+        <div id="wheel-two">2</div>
+        <div id="wheel-three">3</div>
+      <div id="bottom-row">
+        <div id="button-down-1" class="button button-down" onclick='decrease_number_one()'>-</div>
+        <div id="button-down-2" class="button button-down" onclick='decrease_number_two()'>-</div>
+        <div id="button-down-3" class="button button-down" onclick='decrease_number_three()'>-</div>
+      </div>
+    </div>
+  </body>
+</html>
