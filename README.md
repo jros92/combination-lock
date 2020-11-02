@@ -1,2 +1,2 @@
 # combination-lock
-Interactive combination lock for use during class for elementary school kids
+Web app presenting an interactive combination lock for use on a Smartboard in class for elementary school
