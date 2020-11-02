@@ -10,28 +10,94 @@
       function checkCombination()
       {
         // read current values
-        currentNumber
-        
+        currentNumberOne = parseInt(document.getElementById('wheel-one').innerHTML, 10);
+        currentNumberTwo = parseInt(document.getElementById('wheel-two').innerHTML, 10);
+        currentNumberThree = parseInt(document.getElementById('wheel-three').innerHTML, 10);
         
         // check with solution
         if ((currentNumberOne * 100 + currentNumberTwo * 10 + currentNumberThree) == SOLUTION) {
+          // TODO: Replace with changing image to open lock!
           document.getElementById('welcome').innerText += " Geöffnet!";
+        } else {
+          // TODO: Show something that says wrong combination!
+          document.getElementById('welcome').innerText += " Falsch!";
         }
       }
       
+      // Helper function to increase wheels and revolve when hit MAX
+      function increase_number(number) {
+        newNumber = number + 1;
+        if (newNumber > MAX_NUMBER) {
+          newNumber = MIN_NUMBER;
+        }
+        return newNumber;
+      }
+      
+      // Helper function to decrease wheels and revolve when hit MIN
+      function decrease_number(number) {
+        newNumber = number - 1;
+        if (newNumber < MIN_NUMBER) {
+          newNumber = MAX_NUMBER;
+        }
+        return newNumber;
+      }
+      
+      
+      /* INCREASE FUNCTIONS */
       function increase_number_one()
       {
         // read current value
         currentNumber = parseInt(document.getElementById('wheel-one').innerHTML, 10);
         
-        // determine new value
-        newNumber = currentNumber + 1;
-        if (newNumber > MAX_NUMBER) {
-          newNumber = MIN_NUMBER;
-        }
+        // determine new value and write back to HTML
+        document.getElementById('wheel-one').innerHTML = increase_number(currentNumber).toString();
+      }
+      
+      function increase_number_two()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-two').innerHTML, 10);
         
-        // set new value
-        document.getElementById('wheel-one').innerHTML = newNumber.toString();
+        // determine new value and write back to HTML
+        document.getElementById('wheel-two').innerHTML = increase_number(currentNumber).toString();
+      }
+      
+      function increase_number_three()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-three').innerHTML, 10);
+        
+        // determine new value and write back to HTML
+        document.getElementById('wheel-three').innerHTML = increase_number(currentNumber).toString();
+      }
+      
+      
+      /* DECREASE FUNCTIONS */
+      function decrease_number_one()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-one').innerHTML, 10);
+        
+        // determine new value and write back to HTML
+        document.getElementById('wheel-one').innerHTML = decrease_number(currentNumber).toString();
+      }
+      
+      function decrease_number_two()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-two').innerHTML, 10);
+        
+        // determine new value and write back to HTML
+        document.getElementById('wheel-two').innerHTML = decrease_number(currentNumber).toString();
+      }
+      
+      function decrease_number_three()
+      {
+        // read current value
+        currentNumber = parseInt(document.getElementById('wheel-three').innerHTML, 10);
+        
+        // determine new value and write back to HTML
+        document.getElementById('wheel-three').innerHTML = decrease_number(currentNumber).toString();
       }
     </script>
 	<style>
@@ -58,20 +124,23 @@
   </head>
   <body>
     <h1 id="welcome">Zahlenschloss</h1>
-    <div class="content" id="container">
+    <div class="content">
       <div id="top-row">
         <div id="button-up-1" class="button button-up" onclick='increase_number_one()'>+</div>
         <div id="button-up-2" class="button button-up" onclick='increase_number_two()'>+</div>
         <div id="button-up-3" class="button button-up" onclick='increase_number_three()'>+</div>
       </div>
       <div id="wheel-row">
-        <div id="wheel-one">1</div>
-        <div id="wheel-two">2</div>
-        <div id="wheel-three">3</div>
+        <div id="wheel-one" class="wheel">1</div>
+        <div id="wheel-two" class="wheel">2</div>
+        <div id="wheel-three" class="wheel">3</div>
       <div id="bottom-row">
         <div id="button-down-1" class="button button-down" onclick='decrease_number_one()'>-</div>
         <div id="button-down-2" class="button button-down" onclick='decrease_number_two()'>-</div>
         <div id="button-down-3" class="button button-down" onclick='decrease_number_three()'>-</div>
+      </div>
+      <div id="button=check" onclick='checkCombination()'>
+        Probieren  
       </div>
     </div>
   </body>
