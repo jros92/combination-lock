@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Zahlenschloss Fr. Schmidt</title>
+    <title>Frau Schmidt's Zahlenschloss</title>
 	<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <script>
       var MIN_NUMBER = 0;
       var MAX_NUMBER = 9;
-      var SOLUTION = 777;
+      var SOLUTION = 777; // the combination that opens the lock
       
-	  //var OPEN_HTML = "<span class='stringOpen'>ge\u00f6ffnet</span>!";
-	  //var CLOSED_HTML = "<span class='stringClosed'>geschlossen</span>.";
-	  
+	  /* Constants */
 	  var OPEN_HTML = "ge\u00f6ffnet";
 	  var CLOSED_HTML = "geschlossen";
 	  
-	  
+	  // Helper function to check combination and perform resulting actions
       function checkCombination()
       {
         // read current values
@@ -25,20 +23,42 @@
         
         // check with solution
         if ((currentNumberOne * 100 + currentNumberTwo * 10 + currentNumberThree) == SOLUTION) {
+		  // The correct combination was entered
+		  
           // TODO: Replace with changing image to open lock!
-		  //document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("geschlossen.", "ge&ouml;ffnet!");
 		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(CLOSED_HTML, OPEN_HTML);
 		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(".", "!");
 		  document.getElementById('statusWord').style.color = "green";
-        } else {
-          // TODO: Show something that says wrong combination!
-		  //document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("ge\u00f6ffnet!", "geschlossen.");
+        } else { 
+          // incorrect combination was entered
+		  
+		  // TODO: Show something that says wrong combination!
 		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(OPEN_HTML, CLOSED_HTML);
 		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("!", ".");
 		  document.getElementById('statusWord').style.color = "red";
         }
       }
       
+	  // Function to use when user tries the combination. first, show the standby dialog, then, check the solution and display result
+	  function tryToOpenLock() {
+		// display div indicating lock opening process
+		document.getElementById('statusPhrase').style.display = "none";
+		document.getElementById('standbyPhrase').style.display = "block";
+		// keep adding periods to the standby dialog indicating that the lock is being checked to open
+		setTimeout(function(){ document.getElementById('standbyPhrase').innerHTML += "." }, 1000);
+		setTimeout(function(){ document.getElementById('standbyPhrase').innerHTML += "." }, 2000);
+		setTimeout(function(){ document.getElementById('standbyPhrase').innerHTML += "." }, 3000);
+		// Replace text blocks and perform lock check
+		setTimeout(function(){ 
+			document.getElementById('standbyPhrase').style.display = "none";
+			document.getElementById('statusPhrase').style.display = "block";
+			document.getElementById('standbyPhrase').innerHTML = document.getElementById('standbyPhrase').innerHTML.replace("...", ""); // delete periods again
+			
+			// check combination and trigger action
+			checkCombination(); 
+		}, 4000);
+	  }
+	  
       // Helper function to increase wheels and revolve when hit MAX
       function increase_number(number) {
         newNumber = number + 1;
@@ -138,6 +158,7 @@
 		  /*font-family: Impact, sans-serif;*/
 		  color: #1B4086;
 		  margin-top: 0px;
+		  margin-bottom: 10%;
 		}
 		
 		div.row {
@@ -159,6 +180,10 @@
 		  font-size: 48pt;
 		}
 		
+		.button:hover {
+		  color: #1B4086;
+		}
+		
 		.div-left { float: left; }
 		.div-center { display: inline-block; }
 		.div-right { float: right; }
@@ -178,11 +203,30 @@
 		.stringOpen {
 		  color: #00ff00;
 		}*/
+		
+		.emphasisBlue { 
+		  color: #1B4086;
+		}
+		
+		#standbyPhrase {
+		  font-size: 48pt;
+		}
+		
+		#wrongPhrase {
+		  color: red;
+		}
+		 
+		#correctPhrase {
+		  color: green;
+		}
 	</style>
   </head>
   <body>
     <h1 id="welcome">Zahlenschloss</h1>
 	<p id="statusPhrase">Das Schloss ist <span id="statusWord" class='stringClosed' style='color: red'>geschlossen</span>.</p>
+	<p id="standbyPhrase" style="display: none;">Ich versuche, das Schloss zu <span class='emphasisBlue'>&ouml;ffnen</span></p>
+	<p id="wrongPhrase" style="display: none;">Leider falsch.</p>
+	<p id="correctPhrase" style="display: none;">Das Schloss &ouml;ffnet sich!</p>
     <div class="content">
       <div id="top-row" class="row">
         <div id="button-up-1" class="button button-turn button-up div-left" onclick='increase_number_one()'>+</div>
@@ -199,7 +243,7 @@
         <div id="button-down-2" class="button button-turn button-down div-center" onclick='decrease_number_two()'>-</div>
         <div id="button-down-3" class="button button-turn button-down div-right" onclick='decrease_number_three()'>-</div>
       </div>
-      <div id="button-check" class="button" onclick='checkCombination()'>Probieren</div>
+      <div id="button-check" class="button" onclick='tryToOpenLock()'>Probieren</div>
     </div>
   </body>
 </html>
