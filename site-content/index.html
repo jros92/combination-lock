@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HTML CSS JS</title>
+    <title>Zahlenschloss Fr. Schmidt</title>
+	<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
     <script>
       var MIN_NUMBER = 0;
       var MAX_NUMBER = 9;
       var SOLUTION = 777;
       
+	  //var OPEN_HTML = "<span class='stringOpen'>ge\u00f6ffnet</span>!";
+	  //var CLOSED_HTML = "<span class='stringClosed'>geschlossen</span>.";
+	  
+	  var OPEN_HTML = "ge\u00f6ffnet";
+	  var CLOSED_HTML = "geschlossen";
+	  
+	  
       function checkCombination()
       {
         // read current values
@@ -17,10 +26,16 @@
         // check with solution
         if ((currentNumberOne * 100 + currentNumberTwo * 10 + currentNumberThree) == SOLUTION) {
           // TODO: Replace with changing image to open lock!
-          document.getElementById('welcome').innerText += " Geöffnet!";
+		  //document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("geschlossen.", "ge&ouml;ffnet!");
+		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(CLOSED_HTML, OPEN_HTML);
+		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(".", "!");
+		  document.getElementById('statusWord').style.color = "green";
         } else {
           // TODO: Show something that says wrong combination!
-          document.getElementById('welcome').innerText += " Falsch!";
+		  //document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("ge\u00f6ffnet!", "geschlossen.");
+		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace(OPEN_HTML, CLOSED_HTML);
+		  document.getElementById('statusPhrase').innerHTML = document.getElementById('statusPhrase').innerHTML.replace("!", ".");
+		  document.getElementById('statusWord').style.color = "red";
         }
       }
       
@@ -114,34 +129,77 @@
 		body {
 			display: table-cell;
 			vertical-align: middle;
-			font-size: 36
+			font-family: 'Caveat', cursive;
+			font-size: 64pt;
+			text-align: center;
 		}
+
 		h1 {
-		  font-family: Impact, sans-serif;
-		  color: #CE5937;
+		  /*font-family: Impact, sans-serif;*/
+		  color: #1B4086;
+		  margin-top: 0px;
 		}
+		
+		div.row {
+		  position: relative;
+		  text-align: center;
+		}
+		
+		div.wheel, div.button-turn {
+		  width: 33%;
+		}
+		
+		div.wheel {
+		  font-style: bold;
+		  font-size: 100pt;
+		}
+		
+		.button {
+		  cursor: pointer;
+		  font-size: 48pt;
+		}
+		
+		.div-left { float: left; }
+		.div-center { display: inline-block; }
+		.div-right { float: right; }
+		
+		div#button-check {
+		  text-align: center;
+		  font-size: 72pt;
+		  color: #1B4086;
+		  margin-top: 5%;
+		}
+		
+		/*
+		.stringClosed {
+		  color: #ff0000;
+		}
+		
+		.stringOpen {
+		  color: #00ff00;
+		}*/
 	</style>
   </head>
   <body>
     <h1 id="welcome">Zahlenschloss</h1>
+	<p id="statusPhrase">Das Schloss ist <span id="statusWord" class='stringClosed' style='color: red'>geschlossen</span>.</p>
     <div class="content">
-      <div id="top-row">
-        <div id="button-up-1" class="button button-up" onclick='increase_number_one()'>+</div>
-        <div id="button-up-2" class="button button-up" onclick='increase_number_two()'>+</div>
-        <div id="button-up-3" class="button button-up" onclick='increase_number_three()'>+</div>
+      <div id="top-row" class="row">
+        <div id="button-up-1" class="button button-turn button-up div-left" onclick='increase_number_one()'>+</div>
+        <div id="button-up-2" class="button button-turn button-up div-center" onclick='increase_number_two()'>+</div>
+        <div id="button-up-3" class="button button-turn button-up div-right" onclick='increase_number_three()'>+</div>
       </div>
-      <div id="wheel-row">
-        <div id="wheel-one" class="wheel">1</div>
-        <div id="wheel-two" class="wheel">2</div>
-        <div id="wheel-three" class="wheel">3</div>
-      <div id="bottom-row">
-        <div id="button-down-1" class="button button-down" onclick='decrease_number_one()'>-</div>
-        <div id="button-down-2" class="button button-down" onclick='decrease_number_two()'>-</div>
-        <div id="button-down-3" class="button button-down" onclick='decrease_number_three()'>-</div>
+      <div id="wheel-row" class="row">
+        <div id="wheel-one" class="wheel div-left">1</div>
+        <div id="wheel-two" class="wheel div-center">2</div>
+        <div id="wheel-three" class="wheel div-right">3</div>
+	  </div>
+      <div id="bottom-row" class="row">
+        <div id="button-down-1" class="button button-turn button-down div-left" onclick='decrease_number_one()'>-</div>
+        <div id="button-down-2" class="button button-turn button-down div-center" onclick='decrease_number_two()'>-</div>
+        <div id="button-down-3" class="button button-turn button-down div-right" onclick='decrease_number_three()'>-</div>
       </div>
-      <div id="button=check" onclick='checkCombination()'>
-        Probieren  
-      </div>
+      <div id="button-check" class="button" onclick='checkCombination()'>Probieren</div>
     </div>
   </body>
 </html>
